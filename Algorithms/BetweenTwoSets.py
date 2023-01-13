@@ -24,20 +24,26 @@ from math import gcd
 
 def getTotalX(a, b):
     # Write your code here
-    lcm = a[0]
+    def lcm(x, y):
+        return x * y // math.gcd(x, y)
+
+    def gcd(x, y):
+        while(y):
+            x, y = y, x % y
+        return x
+
+    lcm_a = a[0]
+    gcd_b = b[0]
     for i in range(1, len(a)):
-        lcm = (lcm*a[i])//gcd(lcm, a[i])
-    gcd_ = b[0]
+        lcm_a = lcm(lcm_a, a[i])
     for i in range(1, len(b)):
-        gcd_ = gcd(gcd_, b[i])
-    if lcm == 1 or gcd_ == 1:
-        return 0
-    else:
-        count = 0
-        for i in range(lcm, gcd_+1, lcm):
-            if gcd_%i == 0:
-                count += 1
-        return count
+        gcd_b = gcd(gcd_b, b[i])
+
+    count = 0
+    for i in range(lcm_a, gcd_b+1, lcm_a):
+        if gcd_b % i == 0:
+            count += 1
+    return count
 
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
